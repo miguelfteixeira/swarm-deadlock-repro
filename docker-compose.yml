@@ -1,0 +1,5 @@
+version: '2'
+services:
+  repro:
+    build: .
+    command: ['sh', '-c', 'iex --cookie mycookie --name "node@$$(hostname -i)" -S mix']
