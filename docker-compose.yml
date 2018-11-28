@@ -1,5 +1,22 @@
 version: '2'
 services:
-  repro:
+  repro_1:
     build: .
-    command: ['sh', '-c', 'iex --cookie mycookie --name "node@$$(hostname -i)" -S mix']
+    command: ['sh', '-c', 'iex --cookie mycookie --name "node1@$$(hostname -i)" -S mix']
+    environment:
+      - BOOT_SLEEP_TIME=20
+      - SYNC_NODE=node3
+
+  repro_2:
+    build: .
+    command: ['sh', '-c', 'iex --cookie mycookie --name "node2@$$(hostname -i)" -S mix']
+    environment:
+      - BOOT_SLEEP_TIME=1
+      - SYNC_NODE=node1
+
+  repro_3:
+    build: .
+    command: ['sh', '-c', 'iex --cookie mycookie --name "node3@$$(hostname -i)" -S mix']
+    environment:
+      - BOOT_SLEEP_TIME=40
+      - SYNC_NODE=node1

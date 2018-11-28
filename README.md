@@ -1,13 +1,27 @@
-### Swarm deadlock repro
+## Swarm deadlock
 
-This repository serves as a repro for bitwalker/swarm#91 .
-To start reproducing, simply run:
+The goal of this repository is to help debugging an issue in [Swarm](https://github.com/bitwalker/swarm) where one node
+hangs in the `awaiting_sync_ack` state.
+
+**Please note** not all executions will result in a deadlock.
+
+### Steps to reproduce
 
 ```sh
-docker-compose up --scale repro=5
+docker-compose build repro_{2,1,3}
+docker-compose up repro_{2,1,3}
 ```
 
-This command will build a docker image with the compiled repro Elixir application,
-and run 5 instances of the image. All the application does is start `Swarm` and
- `Libcluster` with `Cluster.Strategy.Gossip` topology. A single process on each
-node prints state of the local `Swarm.Tracker` process.
+### Expected result
+
+You should see one node in the `awaiting_sync_ack` state and the other two nodes in the `tracking` state. This situation
+can be identified by the following line in the docker output:
+```
+Swarm.Tracker state: awaiting_sync_ack
+```
+
+You should also see the following warning:
+
+```
+[tracker:handle_cast] unrecognized cast: {:sync_recv, #PID<16218.180.0>, {{0, {0, 1}}, 0}, []}
+```

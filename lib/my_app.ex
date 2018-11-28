@@ -17,6 +17,10 @@ defmodule MyApp do
 
   @impl Application
   def start(_type, _args) do
+    {sleep_time, _} = Integer.parse(System.get_env("BOOT_SLEEP_TIME"))
+    IO.puts "sleeping for #{sleep_time}"
+    :timer.sleep(sleep_time)
+
     Supervisor.start_link([
       {Cluster.Supervisor,
        [[local: [strategy: Cluster.Strategy.Gossip]], [name: MyApp.ClusterSupervisor]]},

@@ -23,7 +23,7 @@ defmodule MyApp.MixProject do
   defp deps do
     [
       {:libcluster, "~> 3.0"},
-      {:swarm, "~> 3.3"}
+      {:swarm, git: "https://github.com/miguelfteixeira/swarm", branch: "force-deadlock"}
     ]
   end
 end
