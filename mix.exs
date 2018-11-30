@@ -23,7 +23,7 @@ defmodule MyApp.MixProject do
   defp deps do
     [
       {:libcluster, "~> 3.0"},
-      {:swarm, git: "https://github.com/miguelfteixeira/swarm", branch: "force-deadlock"}
+      {:swarm, git: "https://github.com/miguelfteixeira/swarm", branch: "fix-deadlock-poc"}
     ]
   end
 end
